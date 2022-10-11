@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-export function useUserMedia(requestedMedia) {
-  const [mediaStream, setMediaStream] = useState(null);
+export function useUserMedia(requestedMedia: MediaStreamConstraints) {
+  const [mediaStream, setMediaStream] = useState<MediaStream|null>(null);
 
   useEffect(() => {
     async function enableStream() {
