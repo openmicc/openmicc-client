@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  distDir: 'build',
+  images: {unoptimized: true}, // to enable static export
 }
 
 module.exports = nextConfig
