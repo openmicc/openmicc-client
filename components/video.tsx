@@ -19,7 +19,7 @@ export default function Video() {
     // const { useReactMediaRecorder } = await import('react-media-recorder');
 
     const { status, startRecording, stopRecording, mediaBlobUrl } =
-        useReactMediaRecorder({ audio: true, video: false, askPermissionOnMount: true });
+        useReactMediaRecorder({ audio: false, video: true, askPermissionOnMount: true });
 
     return (
         <div className="w-[400px] h-[300px] bg-green-100" >
