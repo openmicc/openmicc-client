@@ -1,6 +1,7 @@
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectSignupList } from '../app/store';
+import SignupForm from './signup_form';
 
 
 
@@ -26,5 +27,6 @@ export default function SignupList() {
         <ul className="list-disc list-inside m-2 mt-2">
             {signupList.map((name, index) => <li key={index}>{name}</li>)}
         </ul>
+        <SignupForm/>
     </div>
 }
