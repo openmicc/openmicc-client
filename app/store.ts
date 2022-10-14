@@ -29,6 +29,7 @@ const makeStore = () => configureStore({
   devTools: true,
 });
 
+// TODO: Is AppDispatch correct?
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppState = ReturnType<AppStore['getState']>;
 export type AppDispatch = ReturnType<AppStore['dispatch']>;
