@@ -4,7 +4,7 @@ import { useUserMedia } from '../functions/useUserMedia';
 
 const CAPTURE_OPTIONS = {
     audio: false,
-    video: { facingMode: "environment" },
+    video: { facingMode: "user" },
 };
 
 export default function Camera() {
@@ -16,12 +16,16 @@ export default function Camera() {
     }
 
     function handleCanPlay() {
+        console.log('can play');
         if (videoRef.current) {
+            console.log('playing');
             videoRef.current.play();
         }
     }
 
     return (
+        <div className="border-2">
         <video ref={videoRef} onCanPlay={handleCanPlay} autoPlay playsInline muted />
+        </div>
     );
 }

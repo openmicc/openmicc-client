@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: false, // causes double-rendering
   swcMinify: true,
   images: {unoptimized: true}, // to enable static export
 }
