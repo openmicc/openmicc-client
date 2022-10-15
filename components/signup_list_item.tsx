@@ -49,7 +49,7 @@ export default function SignupListItem(props: Props) {
 
         let you = (
             <span className="text-gray-400 italic min-w-[80px]">
-                (that's you)
+                {"(that's you)"}
             </span>
         );
 
