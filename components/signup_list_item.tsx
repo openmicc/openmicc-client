@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { send } from '@giantmachines/redux-websocket';
+
+import { useAppDispatch } from "../app/hooks";
 import { SignupListEntry } from "../app/ws";
 import { loadReceipt } from "../functions/receipts";
 
@@ -7,10 +10,20 @@ interface Props {
 }
 
 export default function SignupListItem(props: Props) {
-    let receipt = loadReceipt(props.entry.id);
-    console.log(`receipt for ${props.entry.id} ? ${receipt}`);
-
     let [closeHovered, setCloseHovered] = useState(false);
+    let dispatch = useAppDispatch();
+
+    let id = props.entry.id;
+    let receipt = loadReceipt(id);
+
+    let submitRemoval = () => {
+        // TODO: Action creator??
+        let action = {
+            type: "takeMeOff",
+            payload: {id, receipt}
+        };
+        dispatch(send(action));
+    }
 
     // Whether the signup belongs to the user
     let is_mine = (receipt !== null);
@@ -54,6 +67,7 @@ export default function SignupListItem(props: Props) {
             <button className={buttonClassName}
                 onMouseOver={(e) => { setCloseHovered(true) }}
                 onMouseOut={(e) => { setCloseHovered(false) }}
+                onClick={submitRemoval}
             >
                 x
             </button>

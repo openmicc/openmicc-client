@@ -8,10 +8,9 @@ type NewSignupPayload = Readonly<{
     counter: number,
 }>;
 
-type SignupSuccessPayload = Readonly<{id: number, receipt: string}>;
-
-export type SignupListEntry = Readonly<{id: number, text: string}>;
-
+type ListRemovalPayload = Readonly<{ id: number, counter: number }>;
+type SignupSuccessPayload = Readonly<{ id: number, receipt: string }>;
+export type SignupListEntry = Readonly<{ id: number, text: string }>;
 type WholeSignupListPayload = SignupListEntry[];
 
 // type NewSignup = PayloadAction<NewSignupPayload, 'newSignup'>;
@@ -31,6 +30,7 @@ const initialState: State = {
 // NOTE: These actions are never actually dispatched manually,
 // only received from server over websockets.
 export const newSignup = createAction<NewSignupPayload>('newSignup');
+export const listRemoval = createAction<ListRemovalPayload>('listRemoval');
 export const wholeSignupList = createAction<WholeSignupListPayload>('wholeSignupList');
 export const signupSuccess = createAction<SignupSuccessPayload>('signupSuccess');
 
@@ -72,22 +72,29 @@ export const appSlice = createSlice({
         builder
 
             .addCase(newSignup, (state, action) => {
-                console.log("NEW SIGNUP");
-                const { entry } = action.payload;
                 // TODO: CHECK LAST COUNTER VALUE
-                state.signupList.push(entry);
+                const { entry } = action.payload;
+                let signupList = state.signupList.concat(entry);
+
+                return { ...state, signupList };
+            })
+            .addCase(listRemoval, (state, action) => {
+                // TODO: CHECK LAST COUNTER VALUE
+                const { id } = action.payload;
+                const filtered = state.signupList.filter((entry) => entry.id != id);
+
+                return { ...state, signupList: filtered };
             })
             .addCase(wholeSignupList, (state, action) => {
-                console.log("WHOLE SIGNUP LIST");
-                state.signupList = action.payload;
+                let signupList = action.payload;
+                return { ...state, signupList }
             })
             .addCase(signupSuccess, (state, action) => {
                 // TODO: Is it a bad idea to produce side-effects
                 // from this reducer?
-                let {id, receipt} = action.payload;
+                let { id, receipt } = action.payload;
                 saveReceipt(id, receipt);
             })
-
             .addCase(HYDRATE, (state, action) => {
                 return {
                     // TODO: Reconcile states upon hydration?

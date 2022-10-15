@@ -9,13 +9,15 @@ export default function SignupForm() {
     let [text, setText] = useState("");
     let dispatch = useAppDispatch();
 
-    let action = {
-        type: "signMeUp",
-        payload: text,
-
-    };
 
     let submit = () => {
+        // TODO: Action creator??
+        let action = {
+            type: "signMeUp",
+            payload: text,
+
+        };
+
         dispatch(send(action));
         setText("");
     }
