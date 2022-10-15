@@ -25,8 +25,8 @@ export default function SignupList() {
     return <div className={divClasses}>
         <h2 className="m-2 font-bold text-center">The Signup List</h2>
         <ul className="list-disc list-inside m-2 mt-2">
-            {signupList.map((name, index) => <li key={index}>{name}</li>)}
+            {signupList.map((entry, index) => <li key={index}>{entry.text}</li>)}
         </ul>
-        <SignupForm/>
+        <SignupForm />
     </div>
 }

@@ -1,12 +1,18 @@
 import { createSlice, Action, PayloadAction, createReducer, Reducer, createAction } from '@reduxjs/toolkit'
 import { HYDRATE } from "next-redux-wrapper";
+import { saveReceipt } from '../functions/receipts';
 
 type NewSignupPayload = Readonly<{
-    name: string,
+    id: number,
+    entry: SignupListEntry,
     counter: number,
 }>;
 
-type WholeSignupListPayload = string[];
+type SignupSuccessPayload = Readonly<{id: number, receipt: string}>;
+
+type SignupListEntry = Readonly<{id: number, text: string}>;
+
+type WholeSignupListPayload = SignupListEntry[];
 
 // type NewSignup = PayloadAction<NewSignupPayload, 'newSignup'>;
 // type WholeSignupList = PayloadAction<WholeSignupListPayload, 'wholeSignupList'>;
@@ -14,7 +20,7 @@ type WholeSignupListPayload = string[];
 
 // Define a type for the slice state
 export interface State {
-    signupList: string[],
+    signupList: SignupListEntry[],
 }
 
 // Define the initial state using that type
@@ -22,9 +28,11 @@ const initialState: State = {
     signupList: [],
 }
 
+// NOTE: These actions are never actually dispatched manually,
+// only received from server over websockets.
 export const newSignup = createAction<NewSignupPayload>('newSignup');
 export const wholeSignupList = createAction<WholeSignupListPayload>('wholeSignupList');
-
+export const signupSuccess = createAction<SignupSuccessPayload>('signupSuccess');
 
 // const reducers = createReducer(initialState, builder => {
 //     builder
@@ -65,13 +73,19 @@ export const appSlice = createSlice({
 
             .addCase(newSignup, (state, action) => {
                 console.log("NEW SIGNUP");
-                const { name } = action.payload;
+                const { entry } = action.payload;
                 // TODO: CHECK LAST COUNTER VALUE
-                state.signupList.push(name);
+                state.signupList.push(entry);
             })
             .addCase(wholeSignupList, (state, action) => {
                 console.log("WHOLE SIGNUP LIST");
                 state.signupList = action.payload;
+            })
+            .addCase(signupSuccess, (state, action) => {
+                // TODO: Is it a bad idea to produce side-effects
+                // from this reducer?
+                let {id, receipt} = action.payload;
+                saveReceipt(id, receipt);
             })
 
             .addCase(HYDRATE, (state, action) => {
