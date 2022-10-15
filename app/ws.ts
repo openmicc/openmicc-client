@@ -10,7 +10,7 @@ type NewSignupPayload = Readonly<{
 
 type SignupSuccessPayload = Readonly<{id: number, receipt: string}>;
 
-type SignupListEntry = Readonly<{id: number, text: string}>;
+export type SignupListEntry = Readonly<{id: number, text: string}>;
 
 type WholeSignupListPayload = SignupListEntry[];
 

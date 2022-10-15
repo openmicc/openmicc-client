@@ -2,8 +2,7 @@
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectSignupList } from '../app/store';
 import SignupForm from './signup_form';
-
-
+import SignupListItem from './signup_list_item';
 
 
 export default function SignupList() {
@@ -24,9 +23,9 @@ export default function SignupList() {
 
     return <div className={divClasses}>
         <h2 className="m-2 font-bold text-center">The Signup List</h2>
-        <ul className="list-disc list-inside m-2 mt-2">
-            {signupList.map((entry, index) => <li key={index}>{entry.text}</li>)}
-        </ul>
+        <ol className="list-disc m-2 ml-4 list-outside">
+            {signupList.map((entry, index) => <SignupListItem key={index} entry={entry} />)}
+        </ol>
         <SignupForm />
     </div>
 }
