@@ -35,7 +35,7 @@ export default function SignupListItem(props: Props) {
         ]);
 
         let you = (
-            <span className="text-gray-400 italic">
+            <span className="text-gray-400 italic min-w-[80px]">
                 (that's you)
             </span>
         );
@@ -60,7 +60,7 @@ export default function SignupListItem(props: Props) {
         );
 
         maybeControls = (
-            <div className="w-[110px] flex justify-between">
+            <div className="min-w-[110px] flex justify-between">
                 {you}
                 {x}
             </div>
