@@ -24,7 +24,7 @@ export default function SignupList() {
     return <div className={divClasses}>
         <h2 className="m-2 font-bold text-center">The Signup List</h2>
         <ol className="list-decimal m-2 ml-4 list-outside">
-            {signupList.map((entry, index) => <SignupListItem key={index} entry={entry} />)}
+            {signupList.map((entry) => <SignupListItem key={entry.id} entry={entry} />)}
         </ol>
         <SignupForm />
     </div>
