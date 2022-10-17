@@ -2,7 +2,7 @@ import { useState } from "react";
 import { send } from "@giantmachines/redux-websocket";
 
 import { useAppDispatch } from "../app/hooks";
-import { SignupListEntry } from "../app/ws";
+import { SignupListEntry } from "../app/types";
 import { loadReceipt } from "../functions/receipts";
 
 interface Props {

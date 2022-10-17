@@ -1,68 +1,19 @@
 import {
   createSlice,
-  Action,
-  PayloadAction,
-  createReducer,
-  Reducer,
-  createAction,
 } from "@reduxjs/toolkit";
-import { TransportOptions } from "mediasoup-client/lib/Transport";
 import { HYDRATE } from "next-redux-wrapper";
 import { saveReceipt } from "../functions/receipts";
+import { listRemoval, newSignup, signupSuccess, startPerforming, startWatching, wholeSignupList } from "./messages/server";
+import { SignupListEntry } from "./types";
 
-export interface SignupListEntry {
-  id: number;
-  text: string;
-}
 
-/* NewSignup */
-
-interface NewSignupPayload {
-  entry: SignupListEntry;
-  counter: number;
-}
-export const newSignup = createAction<NewSignupPayload>("newSignup");
-
-/* ListRemoval */
-interface ListRemovalPayload {
-  id: number;
-  counter: number;
-}
-export const listRemoval = createAction<ListRemovalPayload>("listRemoval");
-
-/* WholeSignupList */
-type WholeSignupListPayload = SignupListEntry[];
-export const wholeSignupList =
-  createAction<WholeSignupListPayload>("wholeSignupList");
-
-/* SignupSuccess */
-interface SignupSuccessPayload {
-  id: number;
-  receipt: string;
-}
-export const signupSuccess =
-  createAction<SignupSuccessPayload>("signupSuccess");
-
-/* StartWatching */
-interface StartWatchingPayload {
-  consumer_transport_options: TransportOptions;
-}
-export const startWatching =
-  createAction<StartWatchingPayload>("startWatching");
-
-/* StartPerforming */
-interface StartPerformingPayload {
-  producer_transport_options: TransportOptions;
-}
-export const startPerforming =
-  createAction<StartPerformingPayload>("startPerforming");
-
-// type NewSignup = PayloadAction<NewSignupPayload, 'newSignup'>;
-// type WholeSignupList = PayloadAction<WholeSignupListPayload, 'wholeSignupList'>;
+// type NewSignup = Action<NewSignup, 'newSignup'>;
+// type WholeSignupList = Action<WholeSignupList, 'wholeSignupList'>;
 // type Action = NewSignup | WholeSignupList;
 
 // NOTE: These actions are never actually dispatched manually,
 // only received from server over websockets.
+
 
 // Define a type for the slice state
 export interface State {
@@ -107,8 +58,8 @@ export const appSlice = createSlice({
         let { id, receipt } = action.payload;
         saveReceipt(id, receipt);
       })
-      .addCase(startWatching, (state, action) => {})
-      .addCase(startPerforming, (state, action) => {})
+      .addCase(startWatching, (state, action) => { })
+      .addCase(startPerforming, (state, action) => { })
       .addCase(HYDRATE, (state, action) => {
         return {
           // TODO: Reconcile states upon hydration?
