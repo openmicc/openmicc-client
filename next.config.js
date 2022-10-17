@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false, // causes double-rendering
   swcMinify: true,
-  images: {unoptimized: true}, // to enable static export
-}
+  images: { unoptimized: true }, // to enable static export
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
