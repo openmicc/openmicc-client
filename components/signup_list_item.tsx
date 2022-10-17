@@ -4,6 +4,7 @@ import { send } from "@giantmachines/redux-websocket";
 import { useAppDispatch } from "../app/hooks";
 import { SignupListEntry } from "../app/types";
 import { loadReceipt } from "../functions/receipts";
+import { takeMeOff } from "../app/messages/client";
 
 interface Props {
   entry: SignupListEntry;
@@ -17,12 +18,12 @@ export default function SignupListItem(props: Props) {
   let receipt = loadReceipt(id);
 
   let submitRemoval = () => {
-    // TODO: Action creator??
-    let action = {
-      type: "takeMeOff",
-      payload: { id, receipt },
-    };
-    dispatch(send(action));
+    if (receipt) {
+      let action = takeMeOff({ id, receipt });
+      dispatch(send(action));
+    } else {
+      console.error("Cannot submit removal without receipt!");
+    }
   };
 
   // Whether the signup belongs to the user
