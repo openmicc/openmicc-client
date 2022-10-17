@@ -23,7 +23,7 @@ import { SignupListEntry } from "./types";
 // Define a type for the slice state
 export interface State {
   signupList: SignupListEntry[];
-  router_rtp_capabilities?: RtpCapabilities
+  routerRtpCapabilities?: RtpCapabilities
 }
 
 // Define the initial state using that type
@@ -42,8 +42,8 @@ export const appSlice = createSlice({
     // From https://blog.logrocket.com/use-redux-next-js/
     builder
       .addCase(welcome, (state, action) => {
-        const { router_rtp_capabilities } = action.payload;
-        return { ...state, router_rtp_capabilities };
+        const { routerRtpCapabilities } = action.payload;
+        return { ...state, routerRtpCapabilities };
       })
       .addCase(newSignup, (state, action) => {
         // TODO: CHECK LAST COUNTER VALUE

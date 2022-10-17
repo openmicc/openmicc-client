@@ -8,7 +8,7 @@ import { SignupListEntry } from "../types";
 /* Welcome */
 
 export interface Welcome {
-  router_rtp_capabilities: RtpCapabilities,
+  routerRtpCapabilities: RtpCapabilities,
 }
 export const welcome = createAction<Welcome>("welcome");
 
