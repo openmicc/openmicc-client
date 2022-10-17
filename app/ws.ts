@@ -17,6 +17,15 @@ type WholeSignupListPayload = SignupListEntry[];
 // type WholeSignupList = PayloadAction<WholeSignupListPayload, 'wholeSignupList'>;
 // type Action = NewSignup | WholeSignupList;
 
+
+// NOTE: These actions are never actually dispatched manually,
+// only received from server over websockets.
+export const newSignup = createAction<NewSignupPayload>('newSignup');
+export const listRemoval = createAction<ListRemovalPayload>('listRemoval');
+export const wholeSignupList = createAction<WholeSignupListPayload>('wholeSignupList');
+export const signupSuccess = createAction<SignupSuccessPayload>('signupSuccess');
+
+
 // Define a type for the slice state
 export interface State {
     signupList: SignupListEntry[],
@@ -27,45 +36,13 @@ const initialState: State = {
     signupList: [],
 }
 
-// NOTE: These actions are never actually dispatched manually,
-// only received from server over websockets.
-export const newSignup = createAction<NewSignupPayload>('newSignup');
-export const listRemoval = createAction<ListRemovalPayload>('listRemoval');
-export const wholeSignupList = createAction<WholeSignupListPayload>('wholeSignupList');
-export const signupSuccess = createAction<SignupSuccessPayload>('signupSuccess');
 
-// const reducers = createReducer(initialState, builder => {
-//     builder
-//         .addCase(newSignup, (state, action) => {
-//             console.log("NEW SIGNUP");
-//             const { name } = action.payload;
-//             // TODO: CHECK LAST COUNTER VALUE
-//             state.signupList.push(name);
-//         })
-//         .addCase(wholeSignupList, (state, action) => {
-//             console.log("WHOLE SIGNUP LIST");
-//             state.signupList = action.payload;
-//         })
-
-// })
 
 export const appSlice = createSlice({
     name: 'ws',
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {},
-    // reducers: {
-    //     newSignup: (state, action: PayloadAction<NewSignupPayload>) => {
-    //         console.log("NEW SIGNUP");
-    //         const { name } = action.payload;
-    //         // TODO: CHECK LAST COUNTER VALUE
-    //         state.signupList.push(name);
-    //     },
-    //     wholeSignupList: (state, action: PayloadAction<WholeSignupListPayload>) => {
-    //         console.log("WHOLE SIGNUP LIST");
-    //         state.signupList = action.payload;
-    //     },
-    // },
     extraReducers: builder => {
         // Special reducer for hydrating the state. Special case for next-redux-wrapper
         // From https://blog.logrocket.com/use-redux-next-js/
