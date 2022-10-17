@@ -1,8 +1,16 @@
 // Messages sent from server to client
 
-import { createAction, PayloadAction } from "@reduxjs/toolkit";
+import { createAction } from "@reduxjs/toolkit";
+import { RtpCapabilities } from "mediasoup-client/lib/RtpParameters";
 import { TransportOptions } from "mediasoup-client/lib/Transport";
 import { SignupListEntry } from "../types";
+
+/* Welcome */
+
+export interface Welcome {
+  router_rtp_capabilities: RtpCapabilities,
+}
+export const welcome = createAction<Welcome>("welcome");
 
 /* NewSignup */
 

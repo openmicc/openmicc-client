@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RtpCapabilities, RtpParameters } from "mediasoup-client/lib/RtpParameters";
 import { HYDRATE } from "next-redux-wrapper";
 import { saveReceipt } from "../functions/receipts";
 import {
@@ -7,6 +8,7 @@ import {
   signupSuccess,
   startPerforming,
   startWatching,
+  welcome,
   wholeSignupList,
 } from "./messages/server";
 import { SignupListEntry } from "./types";
@@ -21,11 +23,13 @@ import { SignupListEntry } from "./types";
 // Define a type for the slice state
 export interface State {
   signupList: SignupListEntry[];
+  router_rtp_capabilities?: RtpCapabilities
 }
 
 // Define the initial state using that type
 const initialState: State = {
   signupList: [],
+
 };
 
 export const appSlice = createSlice({
@@ -37,6 +41,10 @@ export const appSlice = createSlice({
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
     // From https://blog.logrocket.com/use-redux-next-js/
     builder
+      .addCase(welcome, (state, action) => {
+        const { router_rtp_capabilities } = action.payload;
+        return { ...state, router_rtp_capabilities };
+      })
       .addCase(newSignup, (state, action) => {
         // TODO: CHECK LAST COUNTER VALUE
         const { entry } = action.payload;
