@@ -1,20 +1,20 @@
-import dynamic from 'next/dynamic';
-import SignupList from '../components/signup_list';
-// import Video from '../components/video';
+import { connect } from '@giantmachines/redux-websocket';
 
 import { useAppDispatch } from '../app/hooks';
-import { connect } from '@giantmachines/redux-websocket';
+import SignupList from '../components/signup_list';
+import Stage from '../components/stage';
 
 export default function Live() {
   // Start WebSocket connection
   let ws_starter = start_websocket_connection();
   ws_starter();
 
-  const Camera = dynamic(() => import('../components/camera'), { ssr: false });
   return (
     <>
-      <SignupList />
-      {/* <Camera /> */}
+      <div className="flex">
+        <Stage />
+        <SignupList />
+      </div>
     </>
   );
 }

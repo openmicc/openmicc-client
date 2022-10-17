@@ -11,10 +11,11 @@ export default function SignupList() {
     const divClasses = [
         "bg-green-100",
         "border-red-2",
-        "w-[300px]",
+        "max-w-[300px]",
         "min-h-[400px]",
         "flex-grow",
-        "m-6",
+        "m-4",
+        "ml-0",
         "p-6",
         "text-gray-600",
         "flex",
