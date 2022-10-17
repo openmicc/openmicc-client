@@ -1,11 +1,15 @@
-import {
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { saveReceipt } from "../functions/receipts";
-import { listRemoval, newSignup, signupSuccess, startPerforming, startWatching, wholeSignupList } from "./messages/server";
+import {
+  listRemoval,
+  newSignup,
+  signupSuccess,
+  startPerforming,
+  startWatching,
+  wholeSignupList,
+} from "./messages/server";
 import { SignupListEntry } from "./types";
-
 
 // type NewSignup = Action<NewSignup, 'newSignup'>;
 // type WholeSignupList = Action<WholeSignupList, 'wholeSignupList'>;
@@ -13,7 +17,6 @@ import { SignupListEntry } from "./types";
 
 // NOTE: These actions are never actually dispatched manually,
 // only received from server over websockets.
-
 
 // Define a type for the slice state
 export interface State {
