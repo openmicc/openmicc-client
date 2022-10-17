@@ -3,20 +3,20 @@ import { TransportOptions } from 'mediasoup-client/lib/Transport';
 import { HYDRATE } from "next-redux-wrapper";
 import { saveReceipt } from '../functions/receipts';
 
-export type SignupListEntry = Readonly<{ id: number, text: string }>;
+export interface SignupListEntry { id: number, text: string }
 
 
 /* NewSignup */
 
-type NewSignupPayload = Readonly<{
+interface NewSignupPayload {
     entry: SignupListEntry,
     counter: number,
-}>;
+}
 export const newSignup = createAction<NewSignupPayload>('newSignup');
 
 
 /* ListRemoval */
-type ListRemovalPayload = Readonly<{ id: number, counter: number }>;
+interface ListRemovalPayload { id: number, counter: number }
 export const listRemoval = createAction<ListRemovalPayload>('listRemoval');
 
 /* WholeSignupList */
@@ -24,15 +24,15 @@ type WholeSignupListPayload = SignupListEntry[];
 export const wholeSignupList = createAction<WholeSignupListPayload>('wholeSignupList');
 
 /* SignupSuccess */
-type SignupSuccessPayload = Readonly<{ id: number, receipt: string }>;
+interface SignupSuccessPayload { id: number, receipt: string }
 export const signupSuccess = createAction<SignupSuccessPayload>('signupSuccess');
 
 /* StartWatching */
-type StartWatchingPayload = Readonly<{ consumer_transport_options: TransportOptions }>;
+interface StartWatchingPayload { consumer_transport_options: TransportOptions }
 export const startWatching = createAction<StartWatchingPayload>('startWatching');
 
 /* StartPerforming */
-type StartPerformingPayload = Readonly<{ producer_transport_options: TransportOptions }>;
+interface StartPerformingPayload { producer_transport_options: TransportOptions }
 export const startPerforming = createAction<StartPerformingPayload>('startPerforming');
 
 
@@ -64,7 +64,6 @@ export const appSlice = createSlice({
         // Special reducer for hydrating the state. Special case for next-redux-wrapper
         // From https://blog.logrocket.com/use-redux-next-js/
         builder
-
             .addCase(newSignup, (state, action) => {
                 // TODO: CHECK LAST COUNTER VALUE
                 const { entry } = action.payload;
