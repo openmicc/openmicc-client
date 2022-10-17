@@ -58,8 +58,8 @@ export const appSlice = createSlice({
         let { id, receipt } = action.payload;
         saveReceipt(id, receipt);
       })
-      .addCase(startWatching, (state, action) => { })
-      .addCase(startPerforming, (state, action) => { })
+      .addCase(startWatching, (state, action) => {})
+      .addCase(startPerforming, (state, action) => {})
       .addCase(HYDRATE, (state, action) => {
         return {
           // TODO: Reconcile states upon hydration?
