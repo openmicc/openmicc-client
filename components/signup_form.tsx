@@ -25,6 +25,7 @@ export default function SignupForm() {
       value={text}
       placeholder="add your name..."
       className="p-2"
+      onSubmit={submit}
       onKeyDown={(e) => {
         if (e.key == "Enter") {
           submit();
