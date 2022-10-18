@@ -40,12 +40,13 @@ export const signupSuccess = createAction<SignupSuccess>("signupSuccess");
 
 /* StartWatching */
 export interface StartWatching {
-  consumer_transport_options: TransportOptions;
+  consumerTransportOptions: TransportOptions;
+  clientRtpCapabilities: RtpCapabilities
 }
 export const startWatching = createAction<StartWatching>("startWatching");
 
 /* StartPerforming */
 export interface StartPerforming {
-  producer_transport_options: TransportOptions;
+  producerTransportOptions: TransportOptions;
 }
 export const startPerforming = createAction<StartPerforming>("startPerforming");

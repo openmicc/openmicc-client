@@ -29,7 +29,6 @@ export interface State {
 // Define the initial state using that type
 const initialState: State = {
   signupList: [],
-
 };
 
 export const appSlice = createSlice({

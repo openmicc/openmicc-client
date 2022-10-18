@@ -1,7 +1,6 @@
 import {
   configureStore,
   Middleware,
-  ConfigureStoreOptions,
   ThunkAction,
   Action,
 } from "@reduxjs/toolkit";
@@ -9,6 +8,7 @@ import reduxWebsocket from "@giantmachines/redux-websocket";
 import { createWrapper } from "next-redux-wrapper";
 
 import appReducer, { State as WsState } from "./ws";
+import { listenerMiddleware } from "./listeners";
 
 // Create the middleware instance.
 const reduxWebsocketMiddleware = reduxWebsocket({ deserializer: JSON.parse });
@@ -25,14 +25,20 @@ const wsUnwrappingMiddleware: Middleware = (store) => (next) => (action) => {
 
 // type AppState = { ws: WsState };
 
-const makeStore = () =>
-  configureStore({
-    middleware: [reduxWebsocketMiddleware, wsUnwrappingMiddleware],
+
+const makeStore = () => {
+  return configureStore({
+    middleware: [
+      reduxWebsocketMiddleware,
+      wsUnwrappingMiddleware,
+      listenerMiddleware.middleware
+    ],
     reducer: {
       ws: appReducer,
     },
     devTools: true,
   });
+};
 
 // TODO: Is AppDispatch correct?
 export type AppStore = ReturnType<typeof makeStore>;
