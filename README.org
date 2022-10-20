@@ -1,0 +1,103 @@
+#+title: openmicc-client
+
+This is the frontend for https://openmi.cc, a live performance platform.
+
+* Development
+
+To get started, just run
+
+#+begin_src shell
+yarn dev
+#+end_src
+
+and navigate to https://localhost:3000 in your browser.
+
+* Architecture
+
+** Diagrams
+
+*** Receiving data over WebSockets
+#+begin_src plantuml :inline-utxt :results verbatim
+participant WsRedux [
+    Redux
+    WebSocket
+    Middleware
+]
+participant WsUnwrap [
+    WebSocket
+    Unrapping
+    Middleware
+]
+
+participant Reducer [
+    Redux
+    Reducer
+]
+participant Store [
+    Redux
+    Store
+]
+participant Component [
+    React
+    Component
+]
+WsRedux -> WsUnwrap: { \n\
+    "type": "REDUX_WEBSOCKET::MESSAGE", \n\
+    "payload": "{ \n\
+        \\"type\\": \\"signupSuccess\\", \n\
+        \\"payload\\": { \n\
+            \\"receipt": \\"ab13d89f\\" \n\
+        } \n\
+    }" \n\
+}
+WsUnwrap -> Reducer: { \n\
+    "type": "signupSuccess", \n\
+    "payload": { \n\
+        "receipt": "ab13d89f" \n\
+    } \n\
+}
+Reducer -> Store: state.success = true
+Store -> Component: useAppSelector
+#+end_src
+
+#+RESULTS:
+#+begin_example
+     ┌──────────┐                              ┌──────────┐
+     │Redux     │                              │WebSocket │                     ┌───────┐              ┌─────┐          ┌─────────┐
+     │WebSocket │                              │Unrapping │                     │Redux  │              │Redux│          │React    │
+     │Middleware│                              │Middleware│                     │Reducer│              │Store│          │Component│
+     └────┬─────┘                              └────┬─────┘                     └───┬───┘              └──┬──┘          └────┬────┘
+          │ {                                       │                               │                     │                  │
+          │     "type": "REDUX_WEBSOCKET::MESSAGE", │                               │                     │                  │
+          │     "payload": "{                       │                               │                     │                  │
+          │         \"type\": \"signupSuccess\",    │                               │                     │                  │
+          │         \"payload\": {                  │                               │                     │                  │
+          │             \"receipt": \"ab13d89f\"    │                               │                     │                  │
+          │         }                               │                               │                     │                  │
+          │     }"                                  │                               │                     │                  │
+          │ }                                       │                               │                     │                  │
+          │ ────────────────────────────────────────>                               │                     │                  │
+          │                                         │                               │                     │                  │
+          │                                         │ {                             │                     │                  │
+          │                                         │     "type": "signupSuccess",  │                     │                  │
+          │                                         │     "payload": {              │                     │                  │
+          │                                         │         "receipt": "ab13d89f" │                     │                  │
+          │                                         │     }                         │                     │                  │
+          │                                         │ }                             │                     │                  │
+          │                                         │ ──────────────────────────────>                     │                  │
+          │                                         │                               │                     │                  │
+          │                                         │                               │ state.success = true│                  │
+          │                                         │                               │ ────────────────────>                  │
+          │                                         │                               │                     │                  │
+          │                                         │                               │                     │  useAppSelector  │
+          │                                         │                               │                     │ ─────────────────>
+     ┌────┴─────┐                              ┌────┴─────┐                     ┌───┴───┐              ┌──┴──┐          ┌────┴────┐
+     │Redux     │                              │WebSocket │                     │Redux  │              │Redux│          │React    │
+     │WebSocket │                              │Unrapping │                     │Reducer│              │Store│          │Component│
+     │Middleware│                              │Middleware│                     └───────┘              └─────┘          └─────────┘
+     └──────────┘                              └──────────┘
+#+end_example
+
+
+
+*** TODO Sending WebSocket message
